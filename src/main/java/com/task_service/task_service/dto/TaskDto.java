@@ -1,6 +1,5 @@
 package com.task_service.task_service.dto;
 
-import com.task_service.task_service.util.TaskStatus;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -17,5 +16,8 @@ public class TaskDto {
     @Size(min = 2, max = 255)
     private String description;
 
-    private TaskStatus status = TaskStatus.NEW;
+    @NotNull
+    private String status;
+
+    private Long userId;
 }

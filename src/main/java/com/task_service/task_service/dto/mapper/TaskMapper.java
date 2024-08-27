@@ -2,6 +2,7 @@ package com.task_service.task_service.dto.mapper;
 
 import com.task_service.task_service.dto.TaskDto;
 import com.task_service.task_service.model.Task;
+import com.task_service.task_service.util.TaskStatus;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 
@@ -11,10 +12,14 @@ public class TaskMapper {
     private ModelMapper modelMapper;
 
     public TaskDto convertToDto(Task task) {
-        return modelMapper.map(task, TaskDto.class);
+        TaskDto resultTask = modelMapper.map(task, TaskDto.class);
+        resultTask.setStatus(task.getStatus().name());
+        return resultTask;
     }
 
     public Task convertToEntity(TaskDto taskDto) {
-        return modelMapper.map(taskDto, Task.class);
+        Task resultTask = modelMapper.map(taskDto, Task.class);
+        resultTask.setStatus(TaskStatus.valueOf(taskDto.getStatus()));
+        return resultTask;
     }
 }

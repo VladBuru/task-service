@@ -23,10 +23,9 @@ public class TaskController {
         this.taskMapper = taskMapper;
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<TaskDto> createTask(@Valid @RequestBody TaskDto createdTask,
-                                              @PathVariable Long userId) {
-        Task newTask = taskService.createTask(taskMapper.convertToEntity(createdTask), userId);
+    @PostMapping()
+    public ResponseEntity<TaskDto> createTask(@Valid @RequestBody TaskDto createdTask) {
+        Task newTask = taskService.createTask(taskMapper.convertToEntity(createdTask));
         TaskDto response = taskMapper.convertToDto(newTask);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
