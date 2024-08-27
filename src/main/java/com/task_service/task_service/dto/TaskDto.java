@@ -17,5 +17,5 @@ public class TaskDto {
     @Size(min = 2, max = 255)
     private String description;
 
-    private TaskStatus status = TaskStatus.NEW; // todo поменять тип
+    private TaskStatus status = TaskStatus.NEW;
 }
