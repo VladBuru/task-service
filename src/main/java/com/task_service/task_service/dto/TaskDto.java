@@ -18,7 +18,8 @@ public class TaskDto {
     private String description;
 
     @NotNull
-    @Pattern(regexp = "NEW|IN_PROGRESS|COMPLETED", message = "Task status should be NEW or IN_PROGRESS or COMPLETED")
+    @Pattern(regexp = "NEW|IN_PROGRESS|COMPLETED",
+            message = "Task status should be NEW or IN_PROGRESS or COMPLETED")
     private String status;
 
     private Long userId;
