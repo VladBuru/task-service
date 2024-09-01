@@ -23,6 +23,9 @@ public class TaskService {
 
     @Transactional
     public Task createTask(Task createdTask) {
+        if (taskRepository.existsByTitle(createdTask.getTitle())) {
+            throw  new TaskTitleAlreadyExistsException(createdTask.getTitle());
+        }
         return taskRepository.save(createdTask);
     }
 
@@ -34,8 +37,8 @@ public class TaskService {
         return taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public List<Task> getTasksByUserId(Long id) {
-        return taskRepository.findByUserId(id);
+    public List<Task> getTasksByUserId(Long userId) {
+        return taskRepository.findByUserId(userId);
     }
 
     @Transactional
@@ -55,5 +58,16 @@ public class TaskService {
     public void deleteTask(Long id) {
         Task deletedTask = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
         taskRepository.delete(deletedTask);
+    }
+
+    @Transactional
+    public void deleteUserIdForTasks(Long userId) {
+        List<Task> updatedTasks = taskRepository.findByUserId(userId);
+        if (updatedTasks.isEmpty()) {
+            return;
+        }
+        for (Task task : updatedTasks) {
+            task.setUserId(null);
+        }
     }
 }
